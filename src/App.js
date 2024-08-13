@@ -1,25 +1,36 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
+import WeatherForm from "./components/WeatherForm.js";
 import './App.css';
 
+
+
 function App() {
+  const [city, setCity] = useState("");
+  const [weather, setWeather] = useState(null);
+  const [error, setError] = useState("");
+
+  const API_KEY = "b2ce22a884a0a65aff1b2c048b4c887a";
+
+  const getWeather = async ()=>{
+    try{
+      setError('');
+      const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
+      setWeather(response.data);
+    }
+    catch(err){
+      setError("City not found. Please enter a valid city name.");
+      setWeather(null);
+    }
+  }
+  // useEffect(() => {
+  //   getWeather();
+  // })
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <WeatherForm city={city} setCity={setCity} getWeather={getWeather} weather={weather} error={error}/> 
+  )
 }
 
 export default App;
