@@ -10,7 +10,7 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState("");
 
-  const API_KEY = "b2ce22a884a0a65aff1b2c048b4c887a";
+  const API_KEY = "API_KEY"; //Get your key from OpenWeatherMap
 
   const getWeather = async ()=>{
     try{
